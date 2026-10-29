@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "gpu_utilization_pct": 95.0495,
+    "gpu_idle_pct": 0.0,
+    "throughput_jobs_per_sec": 59.4059,
+    "avg_waiting_time_ms": 23.8333,
+    "avg_response_time_ms": 8.8333,
+    "avg_turnaround_time_ms": 39.8333,
+    "preemption_count": 3,
+    "scheduling_overhead_ms": 3.0,
+    "scheduling_overhead_pct": 5.9406,
+    "deadline_misses": 0,
+    "deadline_miss_rate_pct": 0.0,
+    "starvation_events": 0,
+    "jains_fairness_index": 0.840263,
+    "total_simulation_time_ms": 50.5,
+    "total_busy_time_ms": 48.0,
+    "total_idle_time_ms": 0.0,
+    "total_jobs_submitted": 3,
+    "total_jobs_completed": 3,
+    "starvation_threshold_ms": 100.0
+  },
+  "per_tenant_gpu_service_ms": {
+    "tenant_surveillance": 15.0,
+    "tenant_robotics": 25.0,
+    "tenant_analytics": 8.0
+  },
+  "per_tenant_waiting_time_ms": {
+    "tenant_surveillance": 30.0,
+    "tenant_robotics": 25.5,
+    "tenant_analytics": 16.0
+  },
+  "per_tenant_starvation_events": {
+    "tenant_surveillance": 0,
+    "tenant_robotics": 0,
+    "tenant_analytics": 0
+  },
+  "tenants": {
+    "tenant_surveillance": {
+      "tenant_id": "tenant_surveillance",
+      "gpu_service_ms": 15.0,
+      "avg_waiting_time_ms": 30.0,
+      "completed_jobs_count": 1,
+      "starvation_events_count": 0,
+      "deadline_misses_count": 0
+    },
+    "tenant_robotics": {
+      "tenant_id": "tenant_robotics",
+      "gpu_service_ms": 25.0,
+      "avg_waiting_time_ms": 25.5,
+      "completed_jobs_count": 1,
+      "starvation_events_count": 0,
+      "deadline_misses_count": 0
+    },
+    "tenant_analytics": {
+      "tenant_id": "tenant_analytics",
+      "gpu_service_ms": 8.0,
+      "avg_waiting_time_ms": 16.0,
+      "completed_jobs_count": 1,
+      "starvation_events_count": 0,
+      "deadline_misses_count": 0
+    }
+  },
+  "jobs": [
+    {
+      "job_id": "C1",
+      "tenant_id": "tenant_analytics",
+      "arrival_time_ms": 5.0,
+      "start_time_ms": 21.0,
+      "completion_time_ms": 29.0,
+      "actual_gpu_time_ms": 8.0,
+      "waiting_time_ms": 16.0,
+      "response_time_ms": 16.0,
+      "turnaround_time_ms": 24.0,
+      "deadline_ms": null,
+      "deadline_missed": false,
+      "starved": false,
+      "number_of_preemptions": 0
+    },
+    {
+      "job_id": "B1",
+      "tenant_id": "tenant_surveillance",
+      "arrival_time_ms": 0.0,
+      "start_time_ms": 10.5,
+      "completion_time_ms": 45.0,
+      "actual_gpu_time_ms": 15.0,
+      "waiting_time_ms": 30.0,
+      "response_time_ms": 10.5,
+      "turnaround_time_ms": 45.0,
+      "deadline_ms": null,
+      "deadline_missed": false,
+      "starved": false,
+      "number_of_preemptions": 1
+    },
+    {
+      "job_id": "A1",
+      "tenant_id": "tenant_robotics",
+      "arrival_time_ms": 0.0,
+      "start_time_ms": 0.0,
+      "completion_time_ms": 50.5,
+      "actual_gpu_time_ms": 25.0,
+      "waiting_time_ms": 25.5,
+      "response_time_ms": 0.0,
+      "turnaround_time_ms": 50.5,
+      "deadline_ms": null,
+      "deadline_missed": false,
+      "starved": false,
+      "number_of_preemptions": 2
+    }
+  ]
+}

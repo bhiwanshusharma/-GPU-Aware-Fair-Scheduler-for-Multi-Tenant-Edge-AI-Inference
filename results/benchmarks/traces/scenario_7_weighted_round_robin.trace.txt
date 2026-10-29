@@ -1,0 +1,79 @@
+time=0
+tenant=tenant_batch job=BATCH_0 dispatched
+time=15
+tenant=tenant_batch job=BATCH_0 completed
+tenant=tenant_batch job=BATCH_1 dispatched
+time=20.5
+BATCH_1 quantum expired
+tenant=tenant_critical job=CRIT_0 dispatched
+time=29
+tenant=tenant_critical job=CRIT_0 completed
+tenant=tenant_normal job=MED_0 dispatched
+time=41.5
+tenant=tenant_normal job=MED_0 completed
+tenant=tenant_normal job=MED_1 dispatched
+time=50
+MED_1 quantum expired
+tenant=tenant_batch job=BATCH_2 dispatched
+time=65.5
+tenant=tenant_batch job=BATCH_2 completed
+tenant=tenant_batch job=BATCH_3 dispatched
+time=71
+BATCH_3 quantum expired
+tenant=tenant_critical job=CRIT_1 dispatched
+time=79.5
+tenant=tenant_critical job=CRIT_1 completed
+tenant=tenant_normal job=MED_1 resumed
+time=84
+tenant=tenant_normal job=MED_1 completed
+tenant=tenant_normal job=MED_2 dispatched
+time=96.5
+tenant=tenant_normal job=MED_2 completed
+tenant=tenant_normal job=MED_3 dispatched
+time=101
+MED_3 quantum expired
+tenant=tenant_batch job=BATCH_4 dispatched
+time=116.5
+tenant=tenant_batch job=BATCH_4 completed
+tenant=tenant_batch job=BATCH_5 dispatched
+time=122
+BATCH_5 quantum expired
+tenant=tenant_critical job=CRIT_2 dispatched
+time=130.5
+tenant=tenant_critical job=CRIT_2 completed
+tenant=tenant_critical job=CRIT_3 dispatched
+time=139
+tenant=tenant_critical job=CRIT_3 completed
+tenant=tenant_normal job=MED_3 resumed
+time=147.5
+tenant=tenant_normal job=MED_3 completed
+tenant=tenant_normal job=MED_4 dispatched
+time=160
+tenant=tenant_normal job=MED_4 completed
+tenant=tenant_batch job=BATCH_6 dispatched
+time=175.5
+tenant=tenant_batch job=BATCH_6 completed
+tenant=tenant_batch job=BATCH_7 dispatched
+time=181
+BATCH_7 quantum expired
+tenant=tenant_batch job=BATCH_8 dispatched
+time=196.5
+tenant=tenant_batch job=BATCH_8 completed
+tenant=tenant_batch job=BATCH_9 dispatched
+time=202
+BATCH_9 quantum expired
+tenant=tenant_batch job=BATCH_1 resumed
+time=212.5
+tenant=tenant_batch job=BATCH_1 completed
+tenant=tenant_batch job=BATCH_3 resumed
+time=223
+tenant=tenant_batch job=BATCH_3 completed
+tenant=tenant_batch job=BATCH_5 resumed
+time=233.5
+tenant=tenant_batch job=BATCH_5 completed
+tenant=tenant_batch job=BATCH_7 resumed
+time=244
+tenant=tenant_batch job=BATCH_7 completed
+tenant=tenant_batch job=BATCH_9 resumed
+time=254.5
+tenant=tenant_batch job=BATCH_9 completed

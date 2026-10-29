@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gpu-aware-fair-scheduler"
+version = "0.1.0"
+description = "GPU-Aware Fair Scheduler for Multi-Tenant Edge AI Inference"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Lead Systems Engineer", email = "engineer@edge-ai.org" }
+]
+keywords = [
+    "gpu-scheduling",
+    "edge-ai",
+    "multi-tenancy",
+    "fair-queuing",
+    "operating-systems",
+    "discrete-event-simulation"
+]
+dependencies = [
+    "pyyaml>=6.0",
+    "numpy>=1.24.0",
+    "matplotlib>=3.7.0",
+    "scikit-learn>=1.2.0",
+    "joblib>=1.2.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0"
+]
+hardware = [
+    "torch>=2.0.0"
+]
+
+[project.scripts]
+gpu-sched = "src.cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "simulator*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --strict-markers"

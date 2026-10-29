@@ -1,0 +1,73 @@
+time=0
+tenant=tenant_bulk job=BULK_0 dispatched
+time=20
+BULK_0 quantum expired
+tenant=tenant_interactive job=INTER_0 dispatched
+time=22.5
+tenant=tenant_interactive job=INTER_0 completed
+tenant=tenant_interactive job=INTER_1 dispatched
+time=25
+tenant=tenant_interactive job=INTER_1 completed
+tenant=tenant_interactive job=INTER_2 dispatched
+time=27.5
+tenant=tenant_interactive job=INTER_2 completed
+tenant=tenant_bulk job=BULK_0 resumed
+time=48
+BULK_0 quantum expired
+tenant=tenant_interactive job=INTER_3 dispatched
+time=50.5
+tenant=tenant_interactive job=INTER_3 completed
+tenant=tenant_interactive job=INTER_4 dispatched
+time=53
+tenant=tenant_interactive job=INTER_4 completed
+tenant=tenant_bulk job=BULK_1 dispatched
+time=73.5
+BULK_1 quantum expired
+tenant=tenant_interactive job=INTER_5 dispatched
+time=76
+tenant=tenant_interactive job=INTER_5 completed
+tenant=tenant_interactive job=INTER_6 dispatched
+time=78.5
+tenant=tenant_interactive job=INTER_6 completed
+tenant=tenant_interactive job=INTER_7 dispatched
+time=81
+tenant=tenant_interactive job=INTER_7 completed
+tenant=tenant_bulk job=BULK_2 dispatched
+time=101.5
+BULK_2 quantum expired
+tenant=tenant_interactive job=INTER_8 dispatched
+time=104
+tenant=tenant_interactive job=INTER_8 completed
+tenant=tenant_interactive job=INTER_9 dispatched
+time=106.5
+tenant=tenant_interactive job=INTER_9 completed
+tenant=tenant_interactive job=INTER_10 dispatched
+time=109
+tenant=tenant_interactive job=INTER_10 completed
+tenant=tenant_bulk job=BULK_0 resumed
+time=119.5
+tenant=tenant_bulk job=BULK_0 completed
+tenant=tenant_bulk job=BULK_1 resumed
+time=130
+BULK_1 quantum expired
+tenant=tenant_interactive job=INTER_11 dispatched
+time=132.5
+tenant=tenant_interactive job=INTER_11 completed
+tenant=tenant_interactive job=INTER_12 dispatched
+time=135
+tenant=tenant_interactive job=INTER_12 completed
+tenant=tenant_interactive job=INTER_13 dispatched
+time=137.5
+tenant=tenant_interactive job=INTER_13 completed
+tenant=tenant_bulk job=BULK_2 resumed
+time=158
+BULK_2 quantum expired
+tenant=tenant_interactive job=INTER_14 dispatched
+time=160.5
+tenant=tenant_interactive job=INTER_14 completed
+tenant=tenant_bulk job=BULK_1 resumed
+time=181
+tenant=tenant_bulk job=BULK_1 completed
+tenant=tenant_bulk job=BULK_2 resumed
+time=191.5
+tenant=tenant_bulk job=BULK_2 completed

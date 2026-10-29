@@ -1,0 +1,67 @@
+time=0
+tenant=tenant_constrained job=CONST_0 dispatched
+time=15
+tenant=tenant_constrained job=CONST_0 completed
+tenant=tenant_unconstrained job=UNCONST_0 dispatched
+time=30.5
+tenant=tenant_unconstrained job=UNCONST_0 completed
+tenant=tenant_constrained job=CONST_1 dispatched
+time=46
+tenant=tenant_constrained job=CONST_1 completed
+tenant=tenant_unconstrained job=UNCONST_1 dispatched
+time=61.5
+tenant=tenant_unconstrained job=UNCONST_1 completed
+tenant=tenant_constrained job=CONST_2 dispatched
+time=77
+tenant=tenant_constrained job=CONST_2 completed
+tenant=tenant_unconstrained job=UNCONST_2 dispatched
+time=92.5
+tenant=tenant_unconstrained job=UNCONST_2 completed
+tenant=tenant_constrained job=CONST_3 dispatched
+time=108
+tenant=tenant_constrained job=CONST_3 completed
+tenant=tenant_unconstrained job=UNCONST_3 dispatched
+time=123.5
+tenant=tenant_unconstrained job=UNCONST_3 completed
+tenant=tenant_constrained job=CONST_4 dispatched
+time=139
+tenant=tenant_constrained job=CONST_4 completed
+tenant=tenant_unconstrained job=UNCONST_4 dispatched
+time=154.5
+tenant=tenant_unconstrained job=UNCONST_4 completed
+tenant=tenant_constrained job=CONST_5 dispatched
+time=170
+tenant=tenant_constrained job=CONST_5 completed
+tenant=tenant_unconstrained job=UNCONST_5 dispatched
+time=185.5
+tenant=tenant_unconstrained job=UNCONST_5 completed
+tenant=tenant_constrained job=CONST_6 dispatched
+time=201
+tenant=tenant_constrained job=CONST_6 completed
+tenant=tenant_unconstrained job=UNCONST_6 dispatched
+time=216.5
+tenant=tenant_unconstrained job=UNCONST_6 completed
+tenant=tenant_constrained job=CONST_7 dispatched
+time=232
+tenant=tenant_constrained job=CONST_7 completed
+tenant=tenant_unconstrained job=UNCONST_7 dispatched
+time=247.5
+tenant=tenant_unconstrained job=UNCONST_7 completed
+tenant=tenant_constrained job=CONST_8 dispatched
+time=263
+tenant=tenant_constrained job=CONST_8 completed
+tenant=tenant_constrained job=CONST_9 dispatched
+time=278.5
+tenant=tenant_constrained job=CONST_9 completed
+tenant=tenant_constrained job=CONST_10 dispatched
+time=294
+tenant=tenant_constrained job=CONST_10 completed
+tenant=tenant_constrained job=CONST_11 dispatched
+time=309.5
+tenant=tenant_constrained job=CONST_11 completed
+tenant=tenant_constrained job=CONST_12 dispatched
+time=325
+tenant=tenant_constrained job=CONST_12 completed
+tenant=tenant_constrained job=CONST_13 dispatched
+time=340.5
+tenant=tenant_constrained job=CONST_13 completed

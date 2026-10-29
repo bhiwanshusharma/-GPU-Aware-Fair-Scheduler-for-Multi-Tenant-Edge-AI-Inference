@@ -1,0 +1,88 @@
+time=1.3
+tenant=tenant_1 job=T1_J0 dispatched
+time=13.3
+tenant=tenant_1 job=T1_J0 completed
+tenant=tenant_1 job=T1_J1 dispatched
+time=21.8
+T1_J1 quantum expired
+tenant=tenant_2 job=T2_J0 dispatched
+time=34.3
+tenant=tenant_2 job=T2_J0 completed
+tenant=tenant_2 job=T2_J1 dispatched
+time=42.8
+T2_J1 quantum expired
+tenant=tenant_1 job=T1_J2 dispatched
+time=55.3
+tenant=tenant_1 job=T1_J2 completed
+tenant=tenant_1 job=T1_J1 resumed
+time=59.8
+tenant=tenant_1 job=T1_J1 completed
+tenant=tenant_1 job=T1_J3 dispatched
+time=64.3
+T1_J3 quantum expired
+tenant=tenant_2 job=T2_J2 dispatched
+time=76.8
+tenant=tenant_2 job=T2_J2 completed
+tenant=tenant_2 job=T2_J3 dispatched
+time=85.3
+T2_J3 quantum expired
+tenant=tenant_1 job=T1_J4 dispatched
+time=97.8
+tenant=tenant_1 job=T1_J4 completed
+tenant=tenant_1 job=T1_J5 dispatched
+time=106.3
+T1_J5 quantum expired
+tenant=tenant_2 job=T2_J4 dispatched
+time=118.8
+tenant=tenant_2 job=T2_J4 completed
+tenant=tenant_2 job=T2_J1 resumed
+time=123.3
+tenant=tenant_2 job=T2_J1 completed
+tenant=tenant_2 job=T2_J5 dispatched
+time=127.8
+T2_J5 quantum expired
+tenant=tenant_1 job=T1_J6 dispatched
+time=140.3
+tenant=tenant_1 job=T1_J6 completed
+tenant=tenant_1 job=T1_J3 resumed
+time=148.8
+tenant=tenant_1 job=T1_J3 completed
+tenant=tenant_2 job=T2_J6 dispatched
+time=161.3
+tenant=tenant_2 job=T2_J6 completed
+tenant=tenant_2 job=T2_J7 dispatched
+time=169.8
+T2_J7 quantum expired
+tenant=tenant_1 job=T1_J7 dispatched
+time=182.3
+tenant=tenant_1 job=T1_J7 completed
+tenant=tenant_1 job=T1_J8 dispatched
+time=190.8
+T1_J8 quantum expired
+tenant=tenant_2 job=T2_J8 dispatched
+time=203.3
+tenant=tenant_2 job=T2_J8 completed
+tenant=tenant_2 job=T2_J3 resumed
+time=207.8
+tenant=tenant_2 job=T2_J3 completed
+tenant=tenant_2 job=T2_J9 dispatched
+time=212.3
+T2_J9 quantum expired
+tenant=tenant_1 job=T1_J9 dispatched
+time=224.8
+tenant=tenant_1 job=T1_J9 completed
+tenant=tenant_1 job=T1_J5 resumed
+time=229.3
+tenant=tenant_1 job=T1_J5 completed
+tenant=tenant_1 job=T1_J8 resumed
+time=233.8
+tenant=tenant_1 job=T1_J8 completed
+tenant=tenant_2 job=T2_J5 resumed
+time=242.3
+tenant=tenant_2 job=T2_J5 completed
+tenant=tenant_2 job=T2_J7 resumed
+time=246.8
+tenant=tenant_2 job=T2_J7 completed
+tenant=tenant_2 job=T2_J9 resumed
+time=255.3
+tenant=tenant_2 job=T2_J9 completed

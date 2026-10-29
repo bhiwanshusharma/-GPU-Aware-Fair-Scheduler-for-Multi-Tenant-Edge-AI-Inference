@@ -1,0 +1,518 @@
+Metadata-Version: 2.4
+Name: gpu-aware-fair-scheduler
+Version: 0.1.0
+Summary: GPU-Aware Fair Scheduler for Multi-Tenant Edge AI Inference
+Author-email: Lead Systems Engineer <engineer@edge-ai.org>
+License: MIT
+Keywords: gpu-scheduling,edge-ai,multi-tenancy,fair-queuing,operating-systems,discrete-event-simulation
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: matplotlib>=3.7.0
+Requires-Dist: scikit-learn>=1.2.0
+Requires-Dist: joblib>=1.2.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Provides-Extra: hardware
+Requires-Dist: torch>=2.0.0; extra == "hardware"
+
+# GPU-Aware Fair Scheduler for Multi-Tenant Edge AI
+
+An operating-systems-inspired software-level scheduling system designed to allow multiple AI inference tenants to fairly, efficiently, and predictably share a single GPU on resource-constrained edge platforms (e.g., NVIDIA Jetson AGX Orin, Orin Nano, Xavier).
+
+---
+
+## 1. Overview & Problem Statement
+
+Edge AI devices typically feature a single integrated GPU (iGPU) sharing unified memory architecture (UMA) with the CPU. In multi-tenant environments—such as robotics with simultaneous safety control, surveillance video analytics, and background indexing—naive co-location leads to:
+- **Head-of-Line (HoL) Blocking:** Heavy vision models monopolize the execution pipeline, causing high latency spikes for lightweight, time-sensitive audio or anomaly detection streams.
+- **Starvation:** Lower-priority or bursty tenants are indefinitely blocked by high-throughput workloads.
+- **Unfair Resource Allocation:** Absence of deficit tracking and quota enforcement prevents weighted proportional fairness.
+
+### The Architectural Boundary
+> **Important Distinction:** This scheduler operates at the **application / job-dispatch level**. It does **not** claim or require hardware-level register/SM context preemption mid-kernel. Instead, it enforces OS scheduling principles (Weighted Fair Queuing, Deficit Round Robin, time quanta, quotas, and priority aging) into an application arbiter that controls dispatch ordering and batch granularity.
+
+---
+
+## 2. Key Architectural Features
+
+- **Isolated Tenant Queues:** Independent, capacity-bounded ingress queues with backpressure and drop tracking.
+- **Predictive Deficit Weighted Fair Queuing (P-DWFQ):**
+  - Proportional GPU time allocation based on tenant weights ($w_i$).
+  - Deficit counters ($D_i$) accommodating variable non-preemptible inference durations.
+  - Workload characteristic multiplier ($\psi$) dynamically adjusting quantum sizing.
+  - Priority aging ($P_{eff}$) guaranteeing zero starvation.
+  - Sliding-window quota clamping.
+- **Dual-Mode Execution Architecture:**
+  - **Discrete Event Simulation (DES):** High-fidelity, deterministic virtual GPU engine for rapid development and benchmarking on any CPU machine (macOS / Linux / Windows).
+  - **Jetson Hardware Adapter:** Optional direct execution via PyTorch, CUDA Streams, and non-blocking `torch.cuda.Event` hardware timers.
+- **Comprehensive Telemetry & Evaluation:** Microsecond-precision tracking of waiting time, execution time, turnaround time, throughput, GPU utilization, and weighted Jain's Fairness Index ($\mathcal{J}$).
+
+---
+
+## 3. Directory Layout
+
+```
+.
+├── PROJECT_SPECIFICATION.md          # Complete technical specification
+├── README.md                          # Project documentation and quickstart
+├── pyproject.toml                     # Python build & dependency metadata
+├── requirements.txt                   # Production & development dependencies
+├── configs/
+│   ├── default_simulation.yaml        # Simulation & scheduling parameters
+│   ├── tenants.yaml                   # Tenant catalog (weights, quotas, SLAs)
+│   └── workloads.yaml                 # AI workload profiles and latency models
+├── src/
+│   ├── __init__.py
+│   ├── core/                          # Data models, queues, config loaders
+│   ├── scheduler/                     # Scheduler interfaces and policies
+│   ├── predictor/                     # AI workload feature extraction & profiler
+│   ├── execution/                     # Simulated and hardware execution backends
+│   ├── simulation/                    # Discrete Event Simulation (DES) engine
+│   ├── telemetry/                     # Metrics, Jain's index, visualizer
+│   └── cli/                           # Command-line interface
+├── tests/
+│   └── unit/                          # Pytest unit test suite
+└── benchmarks/                        # Multi-tenant evaluation scenarios (Phase 8)
+```
+
+---
+
+## 4. Getting Started
+
+### Prerequisites
+- Python 3.10+ (tested on Python 3.12)
+- Dependencies: `pyyaml`, `numpy`, `matplotlib`, `pytest`
+
+### Installation
+Clone or navigate to the repository directory:
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 5. CLI Usage
+
+The system provides a unified command-line entrypoint (`gpu-sched` or `python -m src.cli.main`):
+
+```bash
+# Display system info and supported policies
+python3 -m src.cli.main info
+
+# Validate configuration files
+python3 -m src.cli.main validate-config --config-dir configs/
+
+# Inspect registered tenant profiles
+python3 -m src.cli.main inspect-tenants --config configs/tenants.yaml
+
+# Run core smoke test
+python3 -m src.cli.main smoke-test
+
+# Run event-driven GPU simulation demo with baseline or proposed fair scheduler
+python3 -m src.cli.main simulate --quantum 10.0 --overhead 0.5 --policy pdwfq
+
+# Run simulation with AI Workload Predictor attached
+python3 -m src.cli.main simulate --policy pdwfq --use-predictor
+
+# Train the lightweight edge workload prediction model
+python3 -m src.cli.main train-predictor --dataset data/workload_dataset.csv --output models/workload_predictor.joblib
+
+# Inspect real hardware execution layer and GPU telemetry (Jetson / CUDA)
+python3 -m src.cli.main hardware
+```
+
+---
+
+## 6. Proposed Scheduler: Mathematical Dispatch Score
+
+The proposed `GPUFairScheduler` selects the next candidate job $j^*$ according to a formally defined, monotonic composite score $\mathcal{S}(j, t)$:
+
+$$\mathcal{S}(j, t) = \underbrace{\left[ k_p \cdot p_i + k_a \cdot \frac{t - j.\text{arrival\_time}}{T_{\text{starve}}} \right]}_{\text{Priority \& Starvation-Preventing Dynamic Aging}} + \underbrace{k_f \cdot \left( \overline{v}(t) - \frac{S_i(t)}{w_i} \right)}_{\text{Normalized Fair Service Lag / Deficit}} + \underbrace{k_r \cdot \frac{Q_{\text{base}}}{\max(E_j, Q_{\text{base}})}}_{\text{Short-Job Responsiveness}} - \underbrace{k_q \cdot C_i(t)}_{\text{Quota Headroom Penalty}}$$
+
+### Starvation Freedom Guarantee
+For any priority difference $\Delta p = p_A - p_B > 0$, the waiting low-priority job's score increases strictly at rate $\frac{k_a}{T_{\text{starve}}}$. It is guaranteed to overtake the high-priority job within bounded time:
+$$t_{\text{overtake}} \le \frac{k_p (p_A - p_B)}{k_a} \cdot T_{\text{starve}} < \infty$$
+Therefore, **starvation is mathematically impossible**.
+
+---
+
+## 7. AI-Based Workload Predictor
+
+The system includes a lightweight machine-learning workload prediction engine (`LightweightWorkloadPredictor`) designed for edge devices (disk footprint $<250\text{ KB}$, inference latency $<0.1\text{ ms}$):
+
+- **Classification Categories:** `GPU_INTENSIVE`, `CPU_BOUND`, `IO_BOUND`, `MIXED`.
+- **Latency Regression:** Estimates job execution latency $\hat{E}_j$ (ms).
+- **Extracted Features (10):**
+  1. `batch_size`
+  2. `input_elements`
+  3. `model_complexity_flops_g`
+  4. `memory_footprint_mb`
+  5. `cpu_utilization_pct`
+  6. `gpu_utilization_pct`
+  7. `memory_utilization_pct`
+  8. `io_wait_pct`
+  9. `request_frequency_hz`
+  10. `hist_avg_latency_ms`
+
+### How the Predictor Influences Scheduling (Advisory Input)
+The predictor does **not** arbitrarily control the scheduler. Instead, it provides advisory inputs through a strictly bounded mathematical influence mechanism:
+1. **Bounded Latency Blending ($\widetilde{E}_j$):**
+   $$\widetilde{E}_{\text{raw}} = (1 - \gamma_{\text{ml}}) \cdot E_j + \gamma_{\text{ml}} \cdot \hat{E}_j \quad (\gamma_{\text{ml}} = 0.25 \cdot \kappa)$$
+   $$\widetilde{E}_j = \text{clamp}\left(\widetilde{E}_{\text{raw}}, \, 0.5 \cdot E_j, \, 2.0 \cdot E_j\right)$$
+   Even if the ML model predicts $0\text{ ms}$ or $10^6\text{ ms}$, the blended estimate cannot deviate beyond $[0.5\times, 2.0\times]$ of the actual remaining GPU execution time.
+2. **Bounded Priority Adjustment ($\Delta_{\text{ml}}$):**
+   $$\Delta_{\text{ml}}(j) = \text{clamp}(\delta_{\text{raw}}, -1.0, +1.0)$$
+   Because $|\Delta_{\text{ml}}| \le 1.0$, ML priority adjustments cannot override inter-tier priority differences ($\Delta p \ge 1.0$) and cannot prevent priority aging from overtaking favored jobs.
+3. **Dynamic Quantum Scaling ($\psi$):** Scales base quantum to prevent Head-of-Line blocking from large GPU-intensive jobs ($\psi = 0.8$) while bursting fast CPU/IO-bound jobs ($\psi = 1.2 - 1.5$), with the allocated slice strictly clamped to $[Q_{\min}, Q_{\max}]$.
+4. **Strict Invariant Guards:**
+   - **Hard Quota Enforcement:** Quota eligibility checks occur prior to and independent of ML scoring. Throttled tenants ($C_i(t) \ge 1.0$) are strictly ineligible ($\mathcal{E}(i, t) = 0$).
+   - **Zero Starvation:** Priority aging ($k_a \cdot \frac{W_j}{T_{\text{starve}}}$) strictly outgrows any ML priority boost within bounded time $t_{\text{overtake}} < \infty$.
+   - **Tenant Isolation:** Independent ingress FIFO queues prevent cross-tenant interference.
+
+---
+
+## 8. Explainable Scheduling Decision Records
+
+Every dispatch cycle produces an auditable `SchedulingDecision` capturing 12 comprehensive explainability attributes:
+
+| Field | Description |
+| :--- | :--- |
+| `selected_tenant` | Unique tenant identifier winning the dispatch cycle |
+| `selected_job` | GPUJob instance selected for execution |
+| `predicted_workload_type` | Predicted workload classification category (`GPU_INTENSIVE`, `CPU_BOUND`, etc.) |
+| `predicted_gpu_behavior` | Telemetry dictionary containing latency, memory, intensity, confidence, and ML adjustments |
+| `current_tenant_gpu_service` | Total accumulated GPU service (ms) delivered to winning tenant |
+| `tenant_weight` | Configured tenant fair sharing weight ($w_i$) |
+| `tenant_quota_usage` | Consumed GPU execution time (ms) in the current quota window |
+| `priority` | Configured base tenant priority ($p_i$) |
+| `waiting_time` | Total queue waiting duration of the winning job |
+| `scheduling_score` | Final evaluated composite dispatch score ($\mathcal{S}(j^*, t)$) |
+| `selected_quantum` | Allocated dynamic GPU time slice (ms) clamped within $[Q_{\min}, Q_{\max}]$ |
+| `reason_for_selection` | Human-readable explanation and term breakdown justification |
+
+Call `decision.explain()` on any decision record to output a multi-line audit log with component-by-component term breakdowns.
+
+---
+
+## 9. Standalone Scheduler-Agnostic Metrics Engine
+
+The telemetry module includes a complete, scheduler-agnostic `MetricsEngine` (`src/telemetry/metrics_engine.py`) that operates directly on discrete execution traces and job telemetry records without inspecting or coupling with scheduler internal state or policies.
+
+It evaluates 13 core scheduling metrics:
+1. **GPU Utilization (%):** Percentage of simulation time the GPU was actively computing inference kernels ($T_{\text{busy}} / T_{\text{total}} \times 100\%$).
+2. **GPU Idle Percentage (%):** Percentage of simulation time the GPU had no jobs to execute ($T_{\text{idle}} / T_{\text{total}} \times 100\%$).
+3. **Throughput (jobs/sec):** Completed inference jobs per unit simulated second.
+4. **Average Waiting Time (ms):** Mean queue latency across completed jobs ($W_j = T_j - E_j$).
+5. **Average Response Time (ms):** Mean delay from arrival to initial dispatch on the GPU ($R_j = t_{\text{first\_dispatch}} - t_{\text{arrival}}$).
+6. **Average Turnaround Time (ms):** Mean end-to-end duration from arrival to completion ($T_j = t_{\text{completion}} - t_{\text{arrival}}$).
+7. **Per-Tenant GPU Service (ms):** Accumulated GPU compute duration allocated to each tenant ($x_i$).
+8. **Per-Tenant Waiting Time (ms):** Average queue waiting latency experienced by each tenant.
+9. **Number of Preemptions:** Total preemption events occurring at time-slice quantum boundaries.
+10. **Scheduling Overhead (ms and %):** Time and percentage lost to job switching delay.
+11. **Deadline Misses (count and %):** Number and fraction of completed jobs exceeding configured deadlines.
+12. **Starvation Events (count and breakdown):** Occurrences where job waiting time exceeded starvation threshold $T_{\text{starve}}$.
+13. **Jain's Fairness Index ($J$):**
+    $$J = \frac{\left(\sum_{i=1}^n x_i\right)^2}{n \sum_{i=1}^n x_i^2}$$
+    where $x_i$ represents the total GPU service received by tenant $i$, and $n$ is the number of active tenants.
+
+### Machine-Readable JSON & CSV Output
+Export structured experiment results directly from Python or via CLI:
+```bash
+python3 -m src.cli.main simulate --policy pdwfq --export-json results/sim_metrics.json --export-csv results/sim_metrics.csv
+```
+
+---
+
+## 10. Reproducible Benchmarking Framework
+
+The system provides an automated, reproducible benchmarking framework (`src/benchmarks/runner.py`) comparing all 5 scheduling algorithms across 10 standardized multi-tenant edge AI workload scenarios:
+
+### Compared Scheduling Policies
+1. **FIFO (`FIFOScheduler`):** First-in first-out non-preemptive baseline.
+2. **Round Robin (`RoundRobinScheduler`):** Fixed quantum time-slicing across tenant queues.
+3. **Priority Scheduling (`PriorityScheduler`):** Strict priority dispatch.
+4. **Weighted Round Robin (`WeightedRoundRobinScheduler`):** Deficit round-robin proportional to tenant weights.
+5. **GPU-Aware Fair Scheduler (`GPUFairScheduler`):** Proposed multi-factor dynamic aging, fair deficit, responsiveness, and quota-aware scheduler.
+
+### 10 Standardized Workload Scenarios
+| Scenario ID | Name | Profile & Characteristics |
+| :--- | :--- | :--- |
+| `scenario_1` | **2 Equal Tenants** | Symmetric tenants (1:1 weight, equal priority, unconstrained quota) under interleaved arrivals |
+| `scenario_2` | **4 Equal Tenants** | Multi-tenant symmetric concurrency evaluating fairness scaling ($n=4$) |
+| `scenario_3` | **Unequal Tenant Weights** | High-weight ($w=3.0$) vs low-weight ($w=1.0$) tenants verifying proportional service |
+| `scenario_4` | **Heavy + Light Tenants** | One dominant bulk tenant ($w=4.0$) competing against three low-rate tenants |
+| `scenario_5` | **Bursty Workloads** | Tenant with sudden Poisson arrival bursts contending with steady periodic background streams |
+| `scenario_6` | **Mixed CPU/GPU Workloads** | Heterogeneous execution profiles (GPU-intensive, CPU-bound, I/O-bound, and balanced AI) |
+| `scenario_7` | **High-Priority Tenant** | High-priority critical stream ($p=10$) vs background batch ($p=1$) testing starvation bounds |
+| `scenario_8` | **Quota-Constrained Tenant** | Strict sliding-window quota throttling: 25% capped tenant vs unconstrained 75% tenant |
+| `scenario_9` | **Many Tenants (8+)** | High concurrency and queue isolation scaling across 8 active tenants |
+| `scenario_10` | **Short Jobs Mixed with Long Jobs** | Bimodal execution distribution testing short-job responsiveness and convoy effect mitigation |
+
+### CLI Execution
+Run complete multi-scenario benchmarks with a single command:
+```bash
+# Run all 10 scenarios with all 5 schedulers via simulator entrypoint
+python -m simulator.run_experiment --config configs/example.yaml
+
+# Run specific scenarios and policies with custom random seed
+python -m simulator.run_experiment --scenario scenario_1 scenario_7 --policy fifo round_robin gpu_fair --seed 42
+
+# Via CLI main benchmark subcommand
+python -m src.cli.main benchmark --config configs/example.yaml
+```
+
+### Persisted Raw Artifacts
+- **Raw Master JSON (`results/benchmarks/benchmark_results.json`):** Full serialized experiment results, scenario configurations, and metric structures.
+- **Summary Comparison CSV (`results/benchmarks/benchmark_summary.csv`):** Flat comparative metrics across all scenarios and policies.
+---
+
+## 11. Visualization Suite & Publication Plots
+
+The system includes a publication-grade visualization framework (`src/visualization/`) generating 10 distinct analytical figures directly from raw, un-fabricated experiment outputs:
+
+### Generated Plot Figures (`results/plots/`)
+| # | Filename | Description |
+| :---: | :--- | :--- |
+| **1** | `01_gpu_execution_timeline.png` | **GPU Gantt Timeline:** Horizontally stacked execution lanes per tenant showing job start times, end times, preemption markers (red dashed ticks `⏸`), and completion markers (green stars `★`) comparing all 5 algorithms side-by-side. |
+| **1b** | `01b_gpu_fair_detailed_timeline.png` | Detailed single-scheduler Gantt timeline for the proposed GPU-Aware Fair Scheduler. |
+| **2** | `02_tenant_gpu_allocation.png` | **Tenant GPU Allocation:** Stacked bar breakdown showing percentage allocation shares per tenant across schedulers. |
+| **3** | `03_gpu_utilization.png` | **GPU Utilization:** Comparative bar chart of system compute utilization (%) across algorithms. |
+| **4** | `04_jain_fairness_index.png` | **Jain Fairness Index ($J$):** Quantitative fairness evaluation across schedulers relative to optimal baseline ($J=1.0$). |
+| **5** | `05_average_waiting_time.png` | **Average Waiting Time:** Mean queue waiting latency (ms) per algorithm. |
+| **6** | `06_response_time.png` | **Response Time:** Mean delay (ms) from arrival to first dispatch onto the GPU. |
+| **7** | `07_throughput.png` | **Throughput:** System inference throughput in completed jobs/second. |
+| **8** | `08_preemption_count.png` | **Preemption Count:** Frequency of time-slice preemption context switches incurred. |
+| **9** | `09_per_tenant_gpu_service.png` | **Per-Tenant GPU Service:** Absolute compute time (ms) delivered to each individual tenant. |
+| **10** | `10_algorithm_comparison.png` | **Comparative Master Dashboard:** 8-panel multi-metric figure simultaneously evaluating utilization, throughput, waiting time, response time, turnaround time, fairness index, preemptions, and overhead. |
+
+### CLI Visualization Commands
+Generate all publication plots from persisted experiment results:
+```bash
+# Generate all plots using default results
+python -m simulator.plot_results --results-dir results/benchmarks --output-dir results/plots
+
+# Generate plots for a specific scenario at 300 DPI
+python -m simulator.plot_results --scenario scenario_10 --dpi 300
+
+# Via CLI main visualize subcommand
+python -m src.cli.main visualize --results-dir results/benchmarks --output-dir results/plots
+```
+
+---
+
+## 12. Interactive Monitoring Dashboard
+
+The system features a lightweight, web-based monitoring dashboard (`src/dashboard/app.py`) built with Streamlit and designed for live project demonstrations and interactive experiments.
+
+### Strict Architectural Separation
+As required by sound systems engineering principles, **zero scheduling or queue logic resides inside the UI**. The dashboard solely interacts with the [`DashboardSimulationEngine`](file:///Users/bhiwanshusharma/Downloads/Operating%20Systems%20Project/src/dashboard/engine.py) API, preserving OS scheduling autonomy and modularity.
+
+### 13 Real-Time Visual Monitors
+1. **Current GPU Utilization (%):** Real-time percentage of simulation time the GPU is active.
+2. **Active Tenants:** Dynamic table of registered tenants, nominal weights, priorities, quotas, and throttling status.
+3. **Tenant GPU Allocation:** Allocation shares (%) and accumulated service duration (ms).
+4. **Current Running Job:** Live inspection of the currently executing inference job, remaining compute time, and slice duration.
+5. **Waiting Jobs in Queues:** Multi-tenant ingress queue monitor displaying pending jobs, arrival times, and priorities.
+6. **Auditable Scheduling Decisions:** Live dispatch log with component-by-component mathematical score breakdown:
+   $$\mathcal{S}(j, t) = \text{Priority} + \text{Aging} + \text{Fair Service Lag} + \text{Responsiveness} - \text{Quota Penalty}$$
+7. **GPU Execution Timeline:** Gantt-style timeline displaying tenant lanes, job time slices, preemption boundaries (dashed ticks `⏸`), and completion stars (`★`).
+8. **Jain Fairness Index ($J$):** Quantitative fairness score updated dynamically.
+9. **Throughput:** System inference throughput in jobs/second.
+10. **Average Response Time:** Delay (ms) from arrival to first GPU dispatch.
+11. **Average Waiting Time:** Mean queue latency (ms).
+12. **Preemption Count:** Total context switch preemption events.
+13. **Quota Consumption:** Live progress bars tracking each tenant's consumption against its sliding-window quota limit.
+
+### Interactive Simulation Controls
+- **Tenant Controls:** Dynamic sliders for number of tenants (2–6), per-tenant weights ($w_i \in [0.5, 8.0]$), priorities ($p_i \in [1, 10]$), and GPU quotas ($[10\%, 100\%]$).
+- **Time Quantum Controls:** Base GPU quantum ($Q_{\text{base}} \in [5, 80]\text{ ms}$) and context switch overhead delay.
+- **Workload Profile Controls:** Workload distribution (Balanced CV, Bursty Ingress, Mixed CPU/GPU, Bimodal Short/Long, Heavy/Light) and arrival intensity (Normal, High, Stress).
+- **Demonstration Presets:** One-click presets for **Equal Symmetric**, **Starvation Prevention**, **Quota Throttling**, **Interactive vs Bulk**, and **Bursty Ingress**.
+- **Live 5-Policy Comparative Benchmark:** Instantly runs the exact configured workload across FIFO, RR, Priority, WRR, and GPU-Aware Fair, rendering a side-by-side comparison table.
+
+### Launching the Dashboard
+```bash
+# Launch via simulator package entrypoint
+python -m simulator.dashboard --port 8501
+
+# Launch via CLI main tool
+python -m src.cli.main dashboard --port 8501
+
+# Launch directly via Streamlit
+streamlit run src/dashboard/app.py
+```
+
+---
+
+## 13. Real-Hardware Execution Layer (NVIDIA Jetson / CUDA)
+
+The project includes an optional real-hardware execution layer (`src/execution/`) that connects the scheduler to physical NVIDIA Jetson edge computers or CUDA-accelerated systems.
+
+### Crucial Architectural Principle: Software Dispatch vs. Hardware Preemption
+> **Fundamental OS Boundary:**
+> This project does **NOT** claim that user-space software can arbitrarily perform hardware-level GPU context preemption.
+> 
+> In modern GPU microarchitectures (NVIDIA Volta, Ampere, Orin), hardware-level context preemption is handled strictly by GPU microcode, firmware scheduling engines, and privileged kernel-mode drivers (`nvgpu.ko` / `nvidia.ko`) at thread-block boundaries. User-space code cannot asynchronously pause, preempt, or evacuate Streaming Multiprocessor (SM) registers of a running CUDA kernel without driver hooks or device resets.
+>
+> **The Solution: Application-Level GPU Workload Dispatch:**
+> Instead of pretending to perform hardware register preemption, this system implements **bounded application-level workload dispatch**:
+> 1. Workloads are structured into bounded execution units:
+>    - **Inference Requests**
+>    - **Micro-batches** (e.g. batch size of 1–4)
+>    - **Batches**
+>    - **Kernel / Layer Chunks**
+> 2. The **Scheduler** acts as an arbiter deciding **WHICH** tenant gets GPU service next and for what time slice ($Q$).
+> 3. The **Executor** handles **HOW** the selected bounded unit is launched on the hardware runtime.
+> 4. Preemption boundaries naturally occur between bounded execution units, yielding deterministic scheduling without violating GPU driver boundaries.
+
+### Dual Execution Backends (`HardwareExecutor` Interface)
+1. **`SimulationExecutor`:**
+   - Pure Python / discrete event simulation backend.
+   - Zero hardware or CUDA dependencies; 100% portable across macOS, Linux, and Windows.
+   - Accurately tracks slice quanta, context switch overhead, remaining execution time, and mock memory allocations.
+2. **`JetsonExecutor`:**
+   - Physical NVIDIA Jetson / CUDA integration using PyTorch and optional TensorRT.
+   - **Tenant Stream Isolation:** Dedicated CUDA streams (`torch.cuda.Stream(device=device)`) allocated per tenant, isolating execution queues.
+   - **Hardware Event Timing:** High-resolution asynchronous start/end CUDA events (`torch.cuda.Event(enable_timing=True)`) measure exact kernel execution time (`start.elapsed_time(end)`) in milliseconds without host synchronization skew.
+   - **VRAM Telemetry:** Direct hardware queries via `torch.cuda.memory_allocated()` and `torch.cuda.memory_reserved()`.
+   - **Tegra Sysfs Integration:** Probes Jetson Orin sysfs paths (`/sys/devices/gpu.0/load`, thermal zones) for edge GPU utilization and thermals.
+   - **Graceful Degradation:** If CUDA or TensorRT is unavailable (such as during development or CI on CPU/macOS), the executor reports `is_available() -> False` without crashing, and the system automatically falls back to `SimulationExecutor`.
+
+### Executor Factory
+```python
+from src.execution import create_executor
+
+# Automatically detects CUDA/Jetson hardware; falls back to simulation if unavailable
+executor = create_executor(backend="auto")
+telemetry = executor.get_hardware_telemetry()
+print(f"Active Backend: {telemetry.backend_type}, Device: {telemetry.device_name}")
+```
+
+---
+
+## 14. Running Tests
+
+Execute the comprehensive unit and stress test suites:
+
+```bash
+pytest tests/ -v
+```
+
+---
+
+## 15. Implementation Roadmap
+
+- [x] **Phase 1: Project Scaffolding & Core Data Structures**
+- [x] **Phase 2: Baseline Schedulers & Scheduler Abstraction**
+- [x] **Phase 3: Workload Profiling & AI Workload Predictor**
+- [x] **Phase 4: Proposed GPU-Aware Fair Scheduler (P-DWFQ)**
+- [x] **Phase 5 (Telemetry): Standalone Metrics Engine & Jain's Fairness Telemetry**
+  - All 13 metrics calculated on scheduler execution traces.
+  - Mathematical Jain's Fairness Index $J = (\sum x_i)^2 / (n \sum x_i^2)$.
+  - Zero division protection across empty sets and corner cases.
+  - Machine-readable JSON and CSV exporter with summary, tenant, and job tables.
+  - Deterministic manually verified tests.
+- [x] **Phase 6 (Benchmarking): Reproducible Benchmarking Framework**
+  - Automated comparison of FIFO, RR, Priority, WRR, and GPU-Aware Fair Scheduler.
+  - 10 standardized multi-tenant workload scenarios with deterministic pseudo-random seeds.
+  - Deep-cloned workload isolation guaranteeing bit-for-bit identical jobs.
+  - Persisted raw JSON, CSV, and discrete execution trace files.
+  - CLI entrypoint: `python -m simulator.run_experiment --config configs/example.yaml`.
+- [x] **Phase 7 (Visualization): Publication-Grade Visualization Suite**
+  - True GPU Gantt-style timeline displaying tenant lanes, job slices, start/end times, preemption markers, and completion stars.
+  - 10 publication plots: Gantt timeline, tenant allocation, GPU utilization, Jain fairness, waiting time, response time, throughput, preemptions, per-tenant service, and algorithm comparison dashboard.
+  - 100% reproducible, headless Matplotlib rendering (`Agg` backend).
+  - CLI entrypoint: `python -m simulator.plot_results --results-dir results/benchmarks --output-dir results/plots`.
+- [x] **Phase 8 (Monitoring UI): Lightweight Demonstration Dashboard**
+  - Zero scheduling logic in UI; strictly powered by `DashboardSimulationEngine` API.
+  - All 13 verified metrics, active tenants, waiting queues, explainable decision records, and live Gantt chart.
+  - Interactive sliders for tenants, weights, priorities, quantum, workload distribution, and quotas.
+  - CLI entrypoint: `python -m simulator.dashboard --port 8501`.
+- [x] **Phase 9 (Hardware Layer): Real-Hardware Execution Layer (NVIDIA Jetson / CUDA)**
+  - Explicit architectural boundary: Application-level workload dispatch across bounded units.
+  - `HardwareExecutor` interface with `SimulationExecutor` and `JetsonExecutor`.
+  - Dedicated tenant CUDA streams (`torch.cuda.Stream`) for execution isolation.
+  - High-precision hardware CUDA events (`torch.cuda.Event`) for microsecond kernel timing.
+  - Real-time VRAM allocation tracking and Jetson Tegra sysfs telemetry.
+  - Graceful degradation on non-CUDA development platforms with zero crashes.
+  - CLI entrypoint: `python -m src.cli.main hardware`.
+- [x] **Phase 10 (Fault Tolerance): Comprehensive Failure-Mode Analysis**
+  - Robust exception hierarchy inheriting from `GPUSchedulerError` and standard Python built-ins.
+  - Zero silent failures: explicit domain exceptions, rich diagnostics, and structured logging.
+  - Strict input sanitization (tenants, quantum, positive execution durations).
+  - Dual-mode handling for production: fail-fast strict APIs alongside graceful degraded fallback APIs.
+  - All 18 failure modes verified across 48 automated unit tests.
+
+---
+
+## 16. Comprehensive Failure-Mode Analysis & Error Handling
+
+To ensure high reliability on production edge clusters and embedded robotics systems, the scheduler implements a strict **no-silent-failures** policy with a structured domain exception hierarchy.
+
+```mermaid
+classDiagram
+    class GPUSchedulerError {
+        <<Base Exception>>
+    }
+    class InvalidTenantConfigError
+    class InvalidQuantumError
+    class InvalidExecutionTimeError
+    class EmptyQueueError
+    class TenantQuotaExhaustedError
+    class SchedulerStarvationError
+    class PredictorUnavailableError
+    class InvalidPredictorOutputError
+    class ModelNotFoundError
+    class ConfigurationCorruptedError
+    class CUDAUnavailableError
+    class TensorRTUnavailableError
+    class GPUMemoryAllocationError
+    class HardwareExecutionError
+    class JobCancelledError
+    class DuplicateJobError
+    class UnknownTenantError
+
+    GPUSchedulerError <|-- InvalidTenantConfigError
+    GPUSchedulerError <|-- InvalidQuantumError
+    GPUSchedulerError <|-- InvalidExecutionTimeError
+    GPUSchedulerError <|-- EmptyQueueError
+    GPUSchedulerError <|-- TenantQuotaExhaustedError
+    GPUSchedulerError <|-- SchedulerStarvationError
+    GPUSchedulerError <|-- PredictorUnavailableError
+    GPUSchedulerError <|-- InvalidPredictorOutputError
+    GPUSchedulerError <|-- ModelNotFoundError
+    GPUSchedulerError <|-- ConfigurationCorruptedError
+    GPUSchedulerError <|-- CUDAUnavailableError
+    GPUSchedulerError <|-- TensorRTUnavailableError
+    GPUSchedulerError <|-- GPUMemoryAllocationError
+    GPUSchedulerError <|-- HardwareExecutionError
+    GPUSchedulerError <|-- JobCancelledError
+    GPUSchedulerError <|-- DuplicateJobError
+    GPUSchedulerError <|-- UnknownTenantError
+```
+
+### Handled Failure Modes & Mitigations
+
+| # | Failure Mode | Trigger / Condition | Exception / Handling Mechanism | Safety Guarantee |
+|---|--------------|---------------------|--------------------------------|------------------|
+| **1** | **Invalid Tenant Configuration** | Negative weights, priority $\notin [1, 10]$, quota $\le 0$ or $> 100\%$, NaN/Inf weights, empty string IDs. | Raises `InvalidTenantConfigError` (subclass of `ValueError`). | Rejection at configuration initialization; avoids divide-by-zero or scheduling loops. |
+| **2** | **Invalid GPU Quantum** | $Q_{\text{base}} \le 0$, $Q_{\text{min}} > Q_{\text{base}}$, or $Q_{\text{base}} > Q_{\text{max}}$. | Raises `InvalidQuantumError` (subclass of `ValueError`) across scheduler config, simulator, and executors. | Guarantees well-ordered, strictly positive time slicing intervals. |
+| **3** | **Zero GPU Execution Time** | $T_{\text{exec}} \le 0$ requested for submission or slice execution. | Raises `InvalidExecutionTimeError` (subclass of `ValueError`) in simulator & executors. | Prevents infinite zero-work dispatch loops and zero-duration trace spikes. |
+| **4** | **Negative Execution Time** | Negative remaining runtime or negative slice duration. | Raises `InvalidExecutionTimeError` in `GPUJob` constructor, `execute_slice()`, and simulator. | Preserves monotonicity of remaining job runtimes and timestamps. |
+| **5** | **Empty Queues** | No eligible jobs waiting in queues during scheduling pass. | All schedulers return `None` safely. Strict queue consumers call `dequeue_strict()` raising `EmptyQueueError`. | Safe simulator idle progression; no crashes or `IndexError` on zero-backlog states. |
+| **6** | **Tenant Quota Exhaustion** | Tenant exceeds sliding-window GPU allocation limit. | Fair scheduler throttles tenant by skipping queue. `Tenant.enforce_quota_strict()` raises `TenantQuotaExhaustedError`. | Prevents noisy tenants from exceeding reserved GPU capacity without hanging simulator. |
+| **7** | **Scheduler Starvation** | Waiting job delayed beyond $T_{\text{starve}} = 2000\,\text{ms}$. | Warning logged with detailed telemetry. `check_starvation_violations(strict=True)` raises `SchedulerStarvationError`. | Aging term dynamically raises score; strict mode asserts anti-starvation invariants. |
+| **8** | **Predictor Unavailable** | Model file missing or model not trained. | Non-strict mode: logs warning and transparently falls back to heuristic baseline. `predict_strict()` raises `PredictorUnavailableError`. | Scheduling pipeline continues seamlessly with zero downtime when ML fails. |
+| **9** | **Predictor Returns Invalid Output** | ML inference returns NaN, Inf, negative latency, or out-of-range confidence scores. | `PredictionOutput` validation and scheduler sanitization raise `InvalidPredictorOutputError` or clamp to heuristic defaults. | ML inference corruption cannot inject NaN or infinite scores into scheduling calculations. |
+| **10** | **Missing ML Model** | Specified `.joblib` file does not exist or has corrupted pickle bytes. | `LightweightWorkloadPredictor.load()` raises `ModelNotFoundError` (subclass of `FileNotFoundError`). | Clear error message pointing to missing path; no silent `NoneType` bugs. |
+| **11** | **Corrupted Experiment Config** | Malformed YAML syntax or missing root schema keys (`tenants`, `workload`, etc.). | `load_*_config()` raises `ConfigurationCorruptedError` with underlying parsing details. | Halts invalid benchmarking runs early before partial experiment corruption occurs. |
+| **12** | **CUDA Unavailable** | Hardware dispatch attempted on a non-CUDA host (e.g., macOS dev laptop). | `JetsonExecutor.dispatch_slice()` raises `CUDAUnavailableError`. `create_executor(backend="jetson", strict=False)` safely falls back to `SimulationExecutor`. | Cross-platform portability: runs simulations on laptops while supporting strict checks on Jetson. |
+| **13** | **TensorRT Unavailable** | Jetson executor requests TRT optimization but `tensorrt` is not installed. | `JetsonExecutor.enable_tensorrt(strict=True)` raises `TensorRTUnavailableError`. Non-strict returns `False` and uses PyTorch. | Eliminates silent missing-dependency issues during deployment. |
+| **14** | **GPU Memory Allocation Failure** | Model weights and batch size exceed total device VRAM capacity. | Catches host/device OOM and memory limits, raising `GPUMemoryAllocationError` (subclass of `MemoryError`). | Prevents silent process crashes; allows upper orchestration layer to reschedule or throttle. |
+| **15** | **Hardware Executor Failure** | CUDA kernel launch error, stream synchronization error, or device driver failure. | Wraps unhandled hardware runtime exceptions into `HardwareExecutionError`. | Structured error context containing tensor shape, model name, and kernel traceback. |
+| **16** | **Job Cancellation** | Job cancelled by user/client while in queue or during execution. | Transitioned to `JobState.CANCELLED`. Attempting to start or execute raises `JobCancelledError`. | Job removed from active queues; GPU resource freed immediately without zombie execution. |
+| **17** | **Duplicate Job IDs** | Job submitted with an ID that already exists in the queue or simulator. | `TenantJobQueue.enqueue()` and `GPUSimulator.submit_job()` raise `DuplicateJobError`. | Guarantees uniqueness of job telemetry, traces, and metrics. |
+| **18** | **Unknown Tenant IDs** | Job references a tenant not registered in `TenantQueueManager` or `GPUFairScheduler`. | Raises `UnknownTenantError` (subclass of `KeyError`). | Prevents orphaned jobs from executing without tenant accounting or quota tracking. |

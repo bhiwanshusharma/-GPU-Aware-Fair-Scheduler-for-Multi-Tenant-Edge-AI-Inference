@@ -1,0 +1,11 @@
+scenario_id,policy_key,tenant_id,gpu_service_ms,avg_waiting_time_ms,completed_jobs_count,starvation_events_count
+scenario_10,fifo,tenant_interactive,30.0,73.8,15,3
+scenario_10,fifo,tenant_bulk,150.0,35.5,3,0
+scenario_10,round_robin,tenant_interactive,30.0,60.4667,15,0
+scenario_10,round_robin,tenant_bulk,150.0,75.6667,3,0
+scenario_10,priority,tenant_interactive,30.0,70.3667,15,3
+scenario_10,priority,tenant_bulk,150.0,60.8333,3,0
+scenario_10,weighted_round_robin,tenant_interactive,30.0,9.6,15,0
+scenario_10,weighted_round_robin,tenant_bulk,150.0,94.0,3,2
+scenario_10,gpu_fair,tenant_interactive,30.0,8.8333,15,0
+scenario_10,gpu_fair,tenant_bulk,150.0,102.3333,3,2

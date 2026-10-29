@@ -1,0 +1,76 @@
+time=0.6
+tenant=tenant_gpu job=GPU_0 dispatched
+time=16.6
+GPU_0 quantum expired
+tenant=tenant_cpu job=CPU_0 dispatched
+time=18.6
+tenant=tenant_cpu job=CPU_0 completed
+tenant=tenant_io job=IO_0 dispatched
+time=22.1
+tenant=tenant_io job=IO_0 completed
+tenant=tenant_balanced job=BAL_0 dispatched
+time=32.6
+tenant=tenant_balanced job=BAL_0 completed
+tenant=tenant_cpu job=CPU_1 dispatched
+time=34.6
+tenant=tenant_cpu job=CPU_1 completed
+tenant=tenant_io job=IO_1 dispatched
+time=38.1
+tenant=tenant_io job=IO_1 completed
+tenant=tenant_balanced job=BAL_1 dispatched
+time=48.6
+tenant=tenant_balanced job=BAL_1 completed
+tenant=tenant_cpu job=CPU_2 dispatched
+time=50.6
+tenant=tenant_cpu job=CPU_2 completed
+tenant=tenant_io job=IO_2 dispatched
+time=54.1
+tenant=tenant_io job=IO_2 completed
+tenant=tenant_gpu job=GPU_0 resumed
+time=68.6
+tenant=tenant_gpu job=GPU_0 completed
+tenant=tenant_cpu job=CPU_3 dispatched
+time=70.6
+tenant=tenant_cpu job=CPU_3 completed
+tenant=tenant_io job=IO_3 dispatched
+time=74.1
+tenant=tenant_io job=IO_3 completed
+tenant=tenant_balanced job=BAL_2 dispatched
+time=84.6
+tenant=tenant_balanced job=BAL_2 completed
+tenant=tenant_cpu job=CPU_4 dispatched
+time=86.6
+tenant=tenant_cpu job=CPU_4 completed
+tenant=tenant_io job=IO_4 dispatched
+time=90.1
+tenant=tenant_io job=IO_4 completed
+tenant=tenant_balanced job=BAL_3 dispatched
+time=100.6
+tenant=tenant_balanced job=BAL_3 completed
+tenant=tenant_gpu job=GPU_1 dispatched
+time=121.1
+GPU_1 quantum expired
+tenant=tenant_balanced job=BAL_4 dispatched
+time=131.6
+tenant=tenant_balanced job=BAL_4 completed
+tenant=tenant_gpu job=GPU_2 dispatched
+time=148.1
+GPU_2 quantum expired
+tenant=tenant_gpu job=GPU_3 dispatched
+time=164.6
+GPU_3 quantum expired
+tenant=tenant_gpu job=GPU_4 dispatched
+time=181.1
+GPU_4 quantum expired
+tenant=tenant_gpu job=GPU_1 resumed
+time=191.6
+tenant=tenant_gpu job=GPU_1 completed
+tenant=tenant_gpu job=GPU_2 resumed
+time=206.1
+tenant=tenant_gpu job=GPU_2 completed
+tenant=tenant_gpu job=GPU_3 resumed
+time=220.6
+tenant=tenant_gpu job=GPU_3 completed
+tenant=tenant_gpu job=GPU_4 resumed
+time=235.1
+tenant=tenant_gpu job=GPU_4 completed

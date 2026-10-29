@@ -1,0 +1,6 @@
+scenario_id,scenario_name,policy_key,policy_name,gpu_utilization_pct,throughput_jobs_per_sec,avg_waiting_time_ms,avg_response_time_ms,avg_turnaround_time_ms,jains_fairness_index,preemption_count,deadline_misses,starvation_events,scheduling_overhead_ms,completed_jobs,total_jobs,simulation_duration_ms
+scenario_10,Short Jobs Mixed with Long Jobs,fifo,FIFO,95.4907,95.4907,67.4167,67.4167,77.4167,0.692308,0,15,3,8.5,18,18,188.5
+scenario_10,Short Jobs Mixed with Long Jobs,round_robin,Round Robin,93.9948,93.9948,63.0,53.4444,73.0,0.692308,6,14,0,11.5,18,18,191.5
+scenario_10,Short Jobs Mixed with Long Jobs,priority,Priority,94.2408,94.2408,68.7778,62.3611,78.7778,0.692308,6,14,3,11.0,18,18,191.0
+scenario_10,Short Jobs Mixed with Long Jobs,weighted_round_robin,Weighted RR,93.9948,93.9948,23.6667,12.1667,33.6667,0.692308,6,0,2,11.5,18,18,191.5
+scenario_10,Short Jobs Mixed with Long Jobs,gpu_fair,GPU-Aware Fair,93.2642,93.2642,24.4167,11.3333,34.4167,0.692308,9,0,2,13.0,18,18,193.0

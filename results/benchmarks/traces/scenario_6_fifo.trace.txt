@@ -1,0 +1,61 @@
+time=0.6
+tenant=tenant_gpu job=GPU_0 dispatched
+time=30.6
+tenant=tenant_gpu job=GPU_0 completed
+tenant=tenant_cpu job=CPU_0 dispatched
+time=32.6
+tenant=tenant_cpu job=CPU_0 completed
+tenant=tenant_io job=IO_0 dispatched
+time=36.1
+tenant=tenant_io job=IO_0 completed
+tenant=tenant_balanced job=BAL_0 dispatched
+time=46.6
+tenant=tenant_balanced job=BAL_0 completed
+tenant=tenant_gpu job=GPU_1 dispatched
+time=77.1
+tenant=tenant_gpu job=GPU_1 completed
+tenant=tenant_cpu job=CPU_1 dispatched
+time=79.1
+tenant=tenant_cpu job=CPU_1 completed
+tenant=tenant_io job=IO_1 dispatched
+time=82.6
+tenant=tenant_io job=IO_1 completed
+tenant=tenant_balanced job=BAL_1 dispatched
+time=93.1
+tenant=tenant_balanced job=BAL_1 completed
+tenant=tenant_gpu job=GPU_2 dispatched
+time=123.6
+tenant=tenant_gpu job=GPU_2 completed
+tenant=tenant_cpu job=CPU_2 dispatched
+time=125.6
+tenant=tenant_cpu job=CPU_2 completed
+tenant=tenant_io job=IO_2 dispatched
+time=129.1
+tenant=tenant_io job=IO_2 completed
+tenant=tenant_balanced job=BAL_2 dispatched
+time=139.6
+tenant=tenant_balanced job=BAL_2 completed
+tenant=tenant_gpu job=GPU_3 dispatched
+time=170.1
+tenant=tenant_gpu job=GPU_3 completed
+tenant=tenant_cpu job=CPU_3 dispatched
+time=172.1
+tenant=tenant_cpu job=CPU_3 completed
+tenant=tenant_io job=IO_3 dispatched
+time=175.6
+tenant=tenant_io job=IO_3 completed
+tenant=tenant_balanced job=BAL_3 dispatched
+time=186.1
+tenant=tenant_balanced job=BAL_3 completed
+tenant=tenant_gpu job=GPU_4 dispatched
+time=216.6
+tenant=tenant_gpu job=GPU_4 completed
+tenant=tenant_cpu job=CPU_4 dispatched
+time=218.6
+tenant=tenant_cpu job=CPU_4 completed
+tenant=tenant_io job=IO_4 dispatched
+time=222.1
+tenant=tenant_io job=IO_4 completed
+tenant=tenant_balanced job=BAL_4 dispatched
+time=232.6
+tenant=tenant_balanced job=BAL_4 completed

@@ -1,0 +1,30 @@
+# Default Simulation Configuration
+# Defines runtime parameters for Discrete Event Simulation experiments.
+
+simulation:
+  duration_ms: 60000.0          # Total virtual simulation time (60 seconds)
+  random_seed: 42               # Deterministic pseudo-random seed for reproducibility
+  clock_step_min_ms: 0.1        # Microsecond-level simulation resolution
+
+scheduler:
+  policy: "pdwfq"               # Options: fifo, round_robin, strict_priority, pdwfq
+  base_quantum_ms: 25.0         # Base time quantum Q_base
+  min_quantum_ms: 5.0           # Minimum quantum lower clamp
+  max_quantum_ms: 100.0         # Maximum quantum upper clamp
+  aging_alpha: 0.15             # Starvation prevention aging factor
+  starvation_threshold_ms: 150.0 # Time unserved before aging accelerates
+  enable_quota_enforcement: true
+  enable_workload_multiplier: true
+
+workload_generation:
+  traffic_pattern: "poisson"    # Options: poisson, bursty, periodic
+  total_load_target_util: 0.85  # Target total system utilization (85%)
+  arrival_rates:
+    tenant_robotics: 25.0       # req/sec
+    tenant_surveillance: 20.0   # req/sec
+    tenant_analytics: 15.0      # req/sec
+
+output:
+  log_level: "INFO"
+  save_raw_traces: true
+  results_directory: "results"

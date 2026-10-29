@@ -1,0 +1,82 @@
+time=0
+tenant=tenant_heavy job=HEAVY_J0 dispatched
+time=20
+HEAVY_J0 quantum expired
+tenant=tenant_light_1 job=L1_J0 dispatched
+time=23
+tenant=tenant_light_1 job=L1_J0 completed
+tenant=tenant_light_2 job=L2_J0 dispatched
+time=26
+tenant=tenant_light_2 job=L2_J0 completed
+tenant=tenant_light_3 job=L3_J0 dispatched
+time=29
+tenant=tenant_light_3 job=L3_J0 completed
+tenant=tenant_heavy job=HEAVY_J1 dispatched
+time=49.5
+HEAVY_J1 quantum expired
+tenant=tenant_light_1 job=L1_J1 dispatched
+time=52.5
+tenant=tenant_light_1 job=L1_J1 completed
+tenant=tenant_light_2 job=L2_J1 dispatched
+time=55.5
+tenant=tenant_light_2 job=L2_J1 completed
+tenant=tenant_light_3 job=L3_J1 dispatched
+time=58.5
+tenant=tenant_light_3 job=L3_J1 completed
+tenant=tenant_heavy job=HEAVY_J0 resumed
+time=79
+HEAVY_J0 quantum expired
+tenant=tenant_light_1 job=L1_J2 dispatched
+time=82
+tenant=tenant_light_1 job=L1_J2 completed
+tenant=tenant_light_2 job=L2_J2 dispatched
+time=85
+tenant=tenant_light_2 job=L2_J2 completed
+tenant=tenant_light_3 job=L3_J2 dispatched
+time=88
+tenant=tenant_light_3 job=L3_J2 completed
+tenant=tenant_heavy job=HEAVY_J2 dispatched
+time=108.5
+HEAVY_J2 quantum expired
+tenant=tenant_light_1 job=L1_J3 dispatched
+time=111.5
+tenant=tenant_light_1 job=L1_J3 completed
+tenant=tenant_light_2 job=L2_J3 dispatched
+time=114.5
+tenant=tenant_light_2 job=L2_J3 completed
+tenant=tenant_light_3 job=L3_J3 dispatched
+time=117.5
+tenant=tenant_light_3 job=L3_J3 completed
+tenant=tenant_heavy job=HEAVY_J3 dispatched
+time=138
+HEAVY_J3 quantum expired
+tenant=tenant_light_1 job=L1_J4 dispatched
+time=141
+tenant=tenant_light_1 job=L1_J4 completed
+tenant=tenant_light_2 job=L2_J4 dispatched
+time=144
+tenant=tenant_light_2 job=L2_J4 completed
+tenant=tenant_light_3 job=L3_J4 dispatched
+time=147
+tenant=tenant_light_3 job=L3_J4 completed
+tenant=tenant_heavy job=HEAVY_J1 resumed
+time=167.5
+HEAVY_J1 quantum expired
+tenant=tenant_heavy job=HEAVY_J0 resumed
+time=178
+tenant=tenant_heavy job=HEAVY_J0 completed
+tenant=tenant_heavy job=HEAVY_J2 resumed
+time=198.5
+HEAVY_J2 quantum expired
+tenant=tenant_heavy job=HEAVY_J3 resumed
+time=219
+HEAVY_J3 quantum expired
+tenant=tenant_heavy job=HEAVY_J1 resumed
+time=229.5
+tenant=tenant_heavy job=HEAVY_J1 completed
+tenant=tenant_heavy job=HEAVY_J2 resumed
+time=240
+tenant=tenant_heavy job=HEAVY_J2 completed
+tenant=tenant_heavy job=HEAVY_J3 resumed
+time=250.5
+tenant=tenant_heavy job=HEAVY_J3 completed

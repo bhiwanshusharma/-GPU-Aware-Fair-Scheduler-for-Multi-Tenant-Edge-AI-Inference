@@ -1,0 +1,35 @@
+# Reproducible Benchmarking Experiment Configuration
+# Compares FIFO, Round Robin, Priority, Weighted Round Robin, and GPU-Aware Fair Scheduler
+# across standardized multi-tenant edge AI workload scenarios.
+
+benchmark:
+  random_seed: 42
+  base_quantum_ms: 20.0
+  min_quantum_ms: 5.0
+  max_quantum_ms: 100.0
+  context_switch_overhead_ms: 0.5
+  aging_rate: 0.15
+  starvation_threshold_ms: 100.0
+  output_dir: "results/benchmarks"
+  save_traces: true
+
+# Schedulers to compare automatically
+policies:
+  - fifo
+  - round_robin
+  - priority
+  - weighted_round_robin
+  - gpu_fair
+
+# Standard benchmark evaluation scenarios
+scenarios:
+  - scenario_1   # 2 equal tenants
+  - scenario_2   # 4 equal tenants
+  - scenario_3   # unequal tenant weights
+  - scenario_4   # one heavy tenant + several light tenants
+  - scenario_5   # bursty workloads
+  - scenario_6   # mixed CPU/GPU workloads
+  - scenario_7   # high-priority tenant
+  - scenario_8   # quota-constrained tenant
+  - scenario_9   # many tenants (8+ tenants)
+  - scenario_10  # short jobs mixed with long jobs

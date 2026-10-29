@@ -1,0 +1,121 @@
+time=0.1
+tenant=tenant_3 job=T3_J0 dispatched
+time=8.1
+tenant=tenant_3 job=T3_J0 completed
+tenant=tenant_4 job=T4_J0 dispatched
+time=20.6
+tenant=tenant_4 job=T4_J0 completed
+tenant=tenant_5 job=T5_J0 dispatched
+time=37.1
+tenant=tenant_5 job=T5_J0 completed
+tenant=tenant_5 job=T5_J1 dispatched
+time=53.6
+tenant=tenant_5 job=T5_J1 completed
+tenant=tenant_5 job=T5_J2 dispatched
+time=62.1
+T5_J2 quantum expired
+tenant=tenant_6 job=T6_J0 dispatched
+time=70.6
+tenant=tenant_6 job=T6_J0 completed
+tenant=tenant_6 job=T6_J1 dispatched
+time=79.1
+tenant=tenant_6 job=T6_J1 completed
+tenant=tenant_6 job=T6_J2 dispatched
+time=83.6
+T6_J2 quantum expired
+tenant=tenant_7 job=T7_J0 dispatched
+time=96.1
+tenant=tenant_7 job=T7_J0 completed
+tenant=tenant_7 job=T7_J1 dispatched
+time=108.6
+tenant=tenant_7 job=T7_J1 completed
+tenant=tenant_7 job=T7_J2 dispatched
+time=115.1
+T7_J2 quantum expired
+tenant=tenant_0 job=T0_J0 dispatched
+time=123.6
+tenant=tenant_0 job=T0_J0 completed
+tenant=tenant_0 job=T0_J1 dispatched
+time=132.1
+tenant=tenant_0 job=T0_J1 completed
+tenant=tenant_0 job=T0_J2 dispatched
+time=136.6
+T0_J2 quantum expired
+tenant=tenant_1 job=T1_J0 dispatched
+time=149.1
+tenant=tenant_1 job=T1_J0 completed
+tenant=tenant_1 job=T1_J1 dispatched
+time=161.6
+tenant=tenant_1 job=T1_J1 completed
+tenant=tenant_1 job=T1_J2 dispatched
+time=168.1
+T1_J2 quantum expired
+tenant=tenant_2 job=T2_J0 dispatched
+time=184.6
+tenant=tenant_2 job=T2_J0 completed
+tenant=tenant_2 job=T2_J1 dispatched
+time=201.1
+tenant=tenant_2 job=T2_J1 completed
+tenant=tenant_2 job=T2_J2 dispatched
+time=209.6
+T2_J2 quantum expired
+tenant=tenant_3 job=T3_J1 dispatched
+time=218.1
+tenant=tenant_3 job=T3_J1 completed
+tenant=tenant_3 job=T3_J2 dispatched
+time=226.6
+tenant=tenant_3 job=T3_J2 completed
+tenant=tenant_3 job=T3_J3 dispatched
+time=231.1
+T3_J3 quantum expired
+tenant=tenant_4 job=T4_J1 dispatched
+time=243.6
+tenant=tenant_4 job=T4_J1 completed
+tenant=tenant_4 job=T4_J2 dispatched
+time=256.1
+tenant=tenant_4 job=T4_J2 completed
+tenant=tenant_4 job=T4_J3 dispatched
+time=262.6
+T4_J3 quantum expired
+tenant=tenant_5 job=T5_J2 resumed
+time=271.1
+tenant=tenant_5 job=T5_J2 completed
+tenant=tenant_5 job=T5_J3 dispatched
+time=287.6
+tenant=tenant_5 job=T5_J3 completed
+tenant=tenant_6 job=T6_J3 dispatched
+time=296.1
+tenant=tenant_6 job=T6_J3 completed
+tenant=tenant_6 job=T6_J2 resumed
+time=300.6
+tenant=tenant_6 job=T6_J2 completed
+tenant=tenant_7 job=T7_J3 dispatched
+time=313.1
+tenant=tenant_7 job=T7_J3 completed
+tenant=tenant_7 job=T7_J2 resumed
+time=319.6
+tenant=tenant_7 job=T7_J2 completed
+tenant=tenant_0 job=T0_J3 dispatched
+time=328.1
+tenant=tenant_0 job=T0_J3 completed
+tenant=tenant_0 job=T0_J2 resumed
+time=332.6
+tenant=tenant_0 job=T0_J2 completed
+tenant=tenant_1 job=T1_J3 dispatched
+time=345.1
+tenant=tenant_1 job=T1_J3 completed
+tenant=tenant_1 job=T1_J2 resumed
+time=351.6
+tenant=tenant_1 job=T1_J2 completed
+tenant=tenant_2 job=T2_J3 dispatched
+time=368.1
+tenant=tenant_2 job=T2_J3 completed
+tenant=tenant_2 job=T2_J2 resumed
+time=376.6
+tenant=tenant_2 job=T2_J2 completed
+tenant=tenant_3 job=T3_J3 resumed
+time=381.1
+tenant=tenant_3 job=T3_J3 completed
+tenant=tenant_4 job=T4_J3 resumed
+time=387.6
+tenant=tenant_4 job=T4_J3 completed

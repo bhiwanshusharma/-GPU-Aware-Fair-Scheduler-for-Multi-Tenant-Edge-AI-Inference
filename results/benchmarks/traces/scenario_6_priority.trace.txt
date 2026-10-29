@@ -1,0 +1,76 @@
+time=0.6
+tenant=tenant_gpu job=GPU_0 dispatched
+time=20.6
+GPU_0 quantum expired
+tenant=tenant_gpu job=GPU_0 resumed
+time=30.6
+tenant=tenant_gpu job=GPU_0 completed
+tenant=tenant_cpu job=CPU_0 dispatched
+time=32.6
+tenant=tenant_cpu job=CPU_0 completed
+tenant=tenant_io job=IO_0 dispatched
+time=36.1
+tenant=tenant_io job=IO_0 completed
+tenant=tenant_balanced job=BAL_0 dispatched
+time=46.6
+tenant=tenant_balanced job=BAL_0 completed
+tenant=tenant_gpu job=GPU_1 dispatched
+time=67.1
+GPU_1 quantum expired
+tenant=tenant_cpu job=CPU_1 dispatched
+time=69.1
+tenant=tenant_cpu job=CPU_1 completed
+tenant=tenant_io job=IO_1 dispatched
+time=72.6
+tenant=tenant_io job=IO_1 completed
+tenant=tenant_balanced job=BAL_1 dispatched
+time=83.1
+tenant=tenant_balanced job=BAL_1 completed
+tenant=tenant_gpu job=GPU_2 dispatched
+time=103.6
+GPU_2 quantum expired
+tenant=tenant_cpu job=CPU_2 dispatched
+time=105.6
+tenant=tenant_cpu job=CPU_2 completed
+tenant=tenant_io job=IO_2 dispatched
+time=109.1
+tenant=tenant_io job=IO_2 completed
+tenant=tenant_balanced job=BAL_2 dispatched
+time=119.6
+tenant=tenant_balanced job=BAL_2 completed
+tenant=tenant_gpu job=GPU_3 dispatched
+time=140.1
+GPU_3 quantum expired
+tenant=tenant_gpu job=GPU_1 resumed
+time=150.6
+tenant=tenant_gpu job=GPU_1 completed
+tenant=tenant_cpu job=CPU_3 dispatched
+time=152.6
+tenant=tenant_cpu job=CPU_3 completed
+tenant=tenant_io job=IO_3 dispatched
+time=156.1
+tenant=tenant_io job=IO_3 completed
+tenant=tenant_balanced job=BAL_3 dispatched
+time=166.6
+tenant=tenant_balanced job=BAL_3 completed
+tenant=tenant_gpu job=GPU_4 dispatched
+time=187.1
+GPU_4 quantum expired
+tenant=tenant_gpu job=GPU_2 resumed
+time=197.6
+tenant=tenant_gpu job=GPU_2 completed
+tenant=tenant_gpu job=GPU_3 resumed
+time=208.1
+tenant=tenant_gpu job=GPU_3 completed
+tenant=tenant_gpu job=GPU_4 resumed
+time=218.6
+tenant=tenant_gpu job=GPU_4 completed
+tenant=tenant_cpu job=CPU_4 dispatched
+time=220.6
+tenant=tenant_cpu job=CPU_4 completed
+tenant=tenant_io job=IO_4 dispatched
+time=224.1
+tenant=tenant_io job=IO_4 completed
+tenant=tenant_balanced job=BAL_4 dispatched
+time=234.6
+tenant=tenant_balanced job=BAL_4 completed

@@ -1,0 +1,111 @@
+time=0.1
+tenant=tenant_burst_B job=B0_B0 dispatched
+time=6.1
+tenant=tenant_burst_B job=B0_B0 completed
+tenant=tenant_burst_B job=B0_B4 dispatched
+time=12.6
+tenant=tenant_burst_B job=B0_B4 completed
+tenant=tenant_burst_B job=B0_B3 dispatched
+time=19.1
+tenant=tenant_burst_B job=B0_B3 completed
+tenant=tenant_burst_B job=B0_B1 dispatched
+time=21.6
+B0_B1 quantum expired
+tenant=tenant_burst_A job=B0_A1 dispatched
+time=28.1
+tenant=tenant_burst_A job=B0_A1 completed
+tenant=tenant_burst_A job=B0_A4 dispatched
+time=34.6
+tenant=tenant_burst_A job=B0_A4 completed
+tenant=tenant_burst_A job=B0_A0 dispatched
+time=41.1
+tenant=tenant_burst_A job=B0_A0 completed
+tenant=tenant_burst_A job=B0_A2 dispatched
+time=43.6
+B0_A2 quantum expired
+tenant=tenant_burst_B job=B0_B2 dispatched
+time=50.1
+tenant=tenant_burst_B job=B0_B2 completed
+tenant=tenant_burst_B job=B0_B1 resumed
+time=54.6
+tenant=tenant_burst_B job=B0_B1 completed
+tenant=tenant_burst_A job=B0_A3 dispatched
+time=61.1
+tenant=tenant_burst_A job=B0_A3 completed
+tenant=tenant_burst_A job=B0_A2 resumed
+time=65.6
+tenant=tenant_burst_A job=B0_A2 completed
+time=80.0
+tenant=tenant_burst_B job=B1_B4 dispatched
+time=86.5
+tenant=tenant_burst_B job=B1_B4 completed
+tenant=tenant_burst_B job=B1_B1 dispatched
+time=93.0
+tenant=tenant_burst_B job=B1_B1 completed
+tenant=tenant_burst_B job=B1_B0 dispatched
+time=99.5
+tenant=tenant_burst_B job=B1_B0 completed
+tenant=tenant_burst_B job=B1_B2 dispatched
+time=102.0
+B1_B2 quantum expired
+tenant=tenant_burst_A job=B1_A1 dispatched
+time=108.5
+tenant=tenant_burst_A job=B1_A1 completed
+tenant=tenant_burst_A job=B1_A0 dispatched
+time=115.0
+tenant=tenant_burst_A job=B1_A0 completed
+tenant=tenant_burst_A job=B1_A3 dispatched
+time=121.5
+tenant=tenant_burst_A job=B1_A3 completed
+tenant=tenant_burst_A job=B1_A2 dispatched
+time=124.0
+B1_A2 quantum expired
+tenant=tenant_burst_B job=B1_B3 dispatched
+time=130.5
+tenant=tenant_burst_B job=B1_B3 completed
+tenant=tenant_burst_B job=B1_B2 resumed
+time=135.0
+tenant=tenant_burst_B job=B1_B2 completed
+tenant=tenant_burst_A job=B1_A4 dispatched
+time=141.5
+tenant=tenant_burst_A job=B1_A4 completed
+tenant=tenant_burst_A job=B1_A2 resumed
+time=146.0
+tenant=tenant_burst_A job=B1_A2 completed
+time=160.2
+tenant=tenant_burst_A job=B2_A3 dispatched
+time=166.7
+tenant=tenant_burst_A job=B2_A3 completed
+tenant=tenant_burst_A job=B2_A1 dispatched
+time=173.2
+tenant=tenant_burst_A job=B2_A1 completed
+tenant=tenant_burst_A job=B2_A0 dispatched
+time=179.7
+tenant=tenant_burst_A job=B2_A0 completed
+tenant=tenant_burst_A job=B2_A4 dispatched
+time=182.2
+B2_A4 quantum expired
+tenant=tenant_burst_B job=B2_B3 dispatched
+time=188.7
+tenant=tenant_burst_B job=B2_B3 completed
+tenant=tenant_burst_B job=B2_B1 dispatched
+time=195.2
+tenant=tenant_burst_B job=B2_B1 completed
+tenant=tenant_burst_B job=B2_B2 dispatched
+time=201.7
+tenant=tenant_burst_B job=B2_B2 completed
+tenant=tenant_burst_B job=B2_B4 dispatched
+time=204.2
+B2_B4 quantum expired
+tenant=tenant_burst_A job=B2_A2 dispatched
+time=210.7
+tenant=tenant_burst_A job=B2_A2 completed
+tenant=tenant_burst_A job=B2_A4 resumed
+time=215.2
+tenant=tenant_burst_A job=B2_A4 completed
+tenant=tenant_burst_B job=B2_B0 dispatched
+time=221.7
+tenant=tenant_burst_B job=B2_B0 completed
+tenant=tenant_burst_B job=B2_B4 resumed
+time=226.2
+tenant=tenant_burst_B job=B2_B4 completed

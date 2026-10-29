@@ -1,0 +1,97 @@
+time=0.1
+tenant=tenant_medium job=M_J0 dispatched
+time=10.1
+tenant=tenant_medium job=M_J0 completed
+tenant=tenant_heavy job=H_J0 dispatched
+time=20.6
+tenant=tenant_heavy job=H_J0 completed
+tenant=tenant_light job=L_J0 dispatched
+time=30.9
+L_J0 quantum expired
+tenant=tenant_heavy job=H_J1 dispatched
+time=41.4
+tenant=tenant_heavy job=H_J1 completed
+tenant=tenant_medium job=M_J1 dispatched
+time=51.9
+tenant=tenant_medium job=M_J1 completed
+tenant=tenant_heavy job=H_J2 dispatched
+time=62.4
+tenant=tenant_heavy job=H_J2 completed
+tenant=tenant_heavy job=H_J3 dispatched
+time=72.9
+tenant=tenant_heavy job=H_J3 completed
+tenant=tenant_light job=L_J1 dispatched
+time=82.0
+L_J1 quantum expired
+tenant=tenant_medium job=M_J2 dispatched
+time=92.5
+tenant=tenant_medium job=M_J2 completed
+tenant=tenant_heavy job=H_J4 dispatched
+time=103.0
+tenant=tenant_heavy job=H_J4 completed
+tenant=tenant_heavy job=H_J5 dispatched
+time=113.5
+tenant=tenant_heavy job=H_J5 completed
+tenant=tenant_medium job=M_J3 dispatched
+time=124.0
+tenant=tenant_medium job=M_J3 completed
+tenant=tenant_heavy job=H_J6 dispatched
+time=134.5
+tenant=tenant_heavy job=H_J6 completed
+tenant=tenant_heavy job=H_J7 dispatched
+time=145.0
+tenant=tenant_heavy job=H_J7 completed
+tenant=tenant_light job=L_J2 dispatched
+time=154.7
+L_J2 quantum expired
+tenant=tenant_medium job=M_J4 dispatched
+time=165.2
+tenant=tenant_medium job=M_J4 completed
+tenant=tenant_heavy job=H_J8 dispatched
+time=175.7
+tenant=tenant_heavy job=H_J8 completed
+tenant=tenant_heavy job=H_J9 dispatched
+time=186.2
+tenant=tenant_heavy job=H_J9 completed
+tenant=tenant_medium job=M_J5 dispatched
+time=196.7
+tenant=tenant_medium job=M_J5 completed
+tenant=tenant_heavy job=H_J10 dispatched
+time=207.2
+tenant=tenant_heavy job=H_J10 completed
+tenant=tenant_heavy job=H_J11 dispatched
+time=217.7
+tenant=tenant_heavy job=H_J11 completed
+tenant=tenant_light job=L_J3 dispatched
+time=227.6
+L_J3 quantum expired
+tenant=tenant_medium job=M_J6 dispatched
+time=238.1
+tenant=tenant_medium job=M_J6 completed
+tenant=tenant_heavy job=H_J12 dispatched
+time=248.6
+tenant=tenant_heavy job=H_J12 completed
+tenant=tenant_heavy job=H_J13 dispatched
+time=259.1
+tenant=tenant_heavy job=H_J13 completed
+tenant=tenant_medium job=M_J7 dispatched
+time=269.6
+tenant=tenant_medium job=M_J7 completed
+tenant=tenant_heavy job=H_J14 dispatched
+time=280.1
+tenant=tenant_heavy job=H_J14 completed
+tenant=tenant_light job=L_J0 resumed
+time=280.9
+tenant=tenant_light job=L_J0 completed
+tenant=tenant_light job=L_J1 resumed
+time=282.7
+tenant=tenant_light job=L_J1 completed
+tenant=tenant_heavy job=H_J15 dispatched
+time=293.2
+tenant=tenant_heavy job=H_J15 completed
+tenant=tenant_light job=L_J2 resumed
+time=294.6
+tenant=tenant_light job=L_J2 completed
+tenant=tenant_light job=L_J3 resumed
+time=295.6
+tenant=tenant_light job=L_J3 completed

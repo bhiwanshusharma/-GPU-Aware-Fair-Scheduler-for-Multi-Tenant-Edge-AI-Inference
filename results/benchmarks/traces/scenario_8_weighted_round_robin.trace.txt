@@ -1,0 +1,106 @@
+time=0
+tenant=tenant_constrained job=CONST_0 dispatched
+time=15
+tenant=tenant_constrained job=CONST_0 completed
+tenant=tenant_constrained job=CONST_1 dispatched
+time=20.5
+CONST_1 quantum expired
+tenant=tenant_unconstrained job=UNCONST_0 dispatched
+time=36
+tenant=tenant_unconstrained job=UNCONST_0 completed
+tenant=tenant_unconstrained job=UNCONST_1 dispatched
+time=41.5
+UNCONST_1 quantum expired
+tenant=tenant_constrained job=CONST_2 dispatched
+time=57
+tenant=tenant_constrained job=CONST_2 completed
+tenant=tenant_constrained job=CONST_3 dispatched
+time=62.5
+CONST_3 quantum expired
+tenant=tenant_unconstrained job=UNCONST_2 dispatched
+time=78
+tenant=tenant_unconstrained job=UNCONST_2 completed
+tenant=tenant_unconstrained job=UNCONST_1 resumed
+time=83.5
+UNCONST_1 quantum expired
+tenant=tenant_constrained job=CONST_4 dispatched
+time=99
+tenant=tenant_constrained job=CONST_4 completed
+tenant=tenant_constrained job=CONST_1 resumed
+time=104.5
+CONST_1 quantum expired
+tenant=tenant_unconstrained job=UNCONST_3 dispatched
+time=120
+tenant=tenant_unconstrained job=UNCONST_3 completed
+tenant=tenant_unconstrained job=UNCONST_4 dispatched
+time=125.5
+UNCONST_4 quantum expired
+tenant=tenant_constrained job=CONST_5 dispatched
+time=141
+tenant=tenant_constrained job=CONST_5 completed
+tenant=tenant_constrained job=CONST_6 dispatched
+time=146.5
+CONST_6 quantum expired
+tenant=tenant_unconstrained job=UNCONST_1 resumed
+time=152
+tenant=tenant_unconstrained job=UNCONST_1 completed
+tenant=tenant_unconstrained job=UNCONST_5 dispatched
+time=167.5
+tenant=tenant_unconstrained job=UNCONST_5 completed
+tenant=tenant_constrained job=CONST_7 dispatched
+time=183
+tenant=tenant_constrained job=CONST_7 completed
+tenant=tenant_constrained job=CONST_8 dispatched
+time=188.5
+CONST_8 quantum expired
+tenant=tenant_unconstrained job=UNCONST_6 dispatched
+time=204
+tenant=tenant_unconstrained job=UNCONST_6 completed
+tenant=tenant_unconstrained job=UNCONST_7 dispatched
+time=209.5
+UNCONST_7 quantum expired
+tenant=tenant_constrained job=CONST_9 dispatched
+time=225
+tenant=tenant_constrained job=CONST_9 completed
+tenant=tenant_constrained job=CONST_10 dispatched
+time=230.5
+CONST_10 quantum expired
+tenant=tenant_unconstrained job=UNCONST_4 resumed
+time=241
+tenant=tenant_unconstrained job=UNCONST_4 completed
+tenant=tenant_unconstrained job=UNCONST_7 resumed
+time=251.5
+tenant=tenant_unconstrained job=UNCONST_7 completed
+tenant=tenant_constrained job=CONST_11 dispatched
+time=267
+tenant=tenant_constrained job=CONST_11 completed
+tenant=tenant_constrained job=CONST_12 dispatched
+time=272.5
+CONST_12 quantum expired
+tenant=tenant_constrained job=CONST_3 resumed
+time=283
+tenant=tenant_constrained job=CONST_3 completed
+tenant=tenant_constrained job=CONST_13 dispatched
+time=293.5
+CONST_13 quantum expired
+tenant=tenant_constrained job=CONST_1 resumed
+time=299
+tenant=tenant_constrained job=CONST_1 completed
+tenant=tenant_constrained job=CONST_6 resumed
+time=309.5
+tenant=tenant_constrained job=CONST_6 completed
+tenant=tenant_constrained job=CONST_8 resumed
+time=315
+CONST_8 quantum expired
+tenant=tenant_constrained job=CONST_10 resumed
+time=325.5
+tenant=tenant_constrained job=CONST_10 completed
+tenant=tenant_constrained job=CONST_12 resumed
+time=336
+tenant=tenant_constrained job=CONST_12 completed
+tenant=tenant_constrained job=CONST_13 resumed
+time=341.5
+tenant=tenant_constrained job=CONST_13 completed
+tenant=tenant_constrained job=CONST_8 resumed
+time=347
+tenant=tenant_constrained job=CONST_8 completed

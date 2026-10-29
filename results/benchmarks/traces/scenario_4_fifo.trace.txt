@@ -1,0 +1,58 @@
+time=0
+tenant=tenant_heavy job=HEAVY_J0 dispatched
+time=50
+tenant=tenant_heavy job=HEAVY_J0 completed
+tenant=tenant_light_3 job=L3_J0 dispatched
+time=53
+tenant=tenant_light_3 job=L3_J0 completed
+tenant=tenant_light_1 job=L1_J0 dispatched
+time=56
+tenant=tenant_light_1 job=L1_J0 completed
+tenant=tenant_light_2 job=L2_J0 dispatched
+time=59
+tenant=tenant_light_2 job=L2_J0 completed
+tenant=tenant_light_1 job=L1_J1 dispatched
+time=62
+tenant=tenant_light_1 job=L1_J1 completed
+tenant=tenant_light_3 job=L3_J1 dispatched
+time=65
+tenant=tenant_light_3 job=L3_J1 completed
+tenant=tenant_light_2 job=L2_J1 dispatched
+time=68
+tenant=tenant_light_2 job=L2_J1 completed
+tenant=tenant_heavy job=HEAVY_J1 dispatched
+time=118.5
+tenant=tenant_heavy job=HEAVY_J1 completed
+tenant=tenant_light_3 job=L3_J2 dispatched
+time=121.5
+tenant=tenant_light_3 job=L3_J2 completed
+tenant=tenant_light_2 job=L2_J2 dispatched
+time=124.5
+tenant=tenant_light_2 job=L2_J2 completed
+tenant=tenant_light_1 job=L1_J2 dispatched
+time=127.5
+tenant=tenant_light_1 job=L1_J2 completed
+tenant=tenant_light_3 job=L3_J3 dispatched
+time=130.5
+tenant=tenant_light_3 job=L3_J3 completed
+tenant=tenant_light_1 job=L1_J3 dispatched
+time=133.5
+tenant=tenant_light_1 job=L1_J3 completed
+tenant=tenant_light_2 job=L2_J3 dispatched
+time=136.5
+tenant=tenant_light_2 job=L2_J3 completed
+tenant=tenant_heavy job=HEAVY_J2 dispatched
+time=187
+tenant=tenant_heavy job=HEAVY_J2 completed
+tenant=tenant_light_2 job=L2_J4 dispatched
+time=190
+tenant=tenant_light_2 job=L2_J4 completed
+tenant=tenant_light_3 job=L3_J4 dispatched
+time=193
+tenant=tenant_light_3 job=L3_J4 completed
+tenant=tenant_light_1 job=L1_J4 dispatched
+time=196
+tenant=tenant_light_1 job=L1_J4 completed
+tenant=tenant_heavy job=HEAVY_J3 dispatched
+time=246.5
+tenant=tenant_heavy job=HEAVY_J3 completed

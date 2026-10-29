@@ -1,0 +1,73 @@
+time=0
+tenant=tenant_bulk job=BULK_0 dispatched
+time=20
+BULK_0 quantum expired
+tenant=tenant_bulk job=BULK_0 resumed
+time=40
+BULK_0 quantum expired
+tenant=tenant_interactive job=INTER_0 dispatched
+time=42.5
+tenant=tenant_interactive job=INTER_0 completed
+tenant=tenant_interactive job=INTER_1 dispatched
+time=45
+tenant=tenant_interactive job=INTER_1 completed
+tenant=tenant_bulk job=BULK_1 dispatched
+time=65.5
+BULK_1 quantum expired
+tenant=tenant_bulk job=BULK_0 resumed
+time=76
+tenant=tenant_bulk job=BULK_0 completed
+tenant=tenant_interactive job=INTER_2 dispatched
+time=78.5
+tenant=tenant_interactive job=INTER_2 completed
+tenant=tenant_interactive job=INTER_3 dispatched
+time=81
+tenant=tenant_interactive job=INTER_3 completed
+tenant=tenant_bulk job=BULK_2 dispatched
+time=101.5
+BULK_2 quantum expired
+tenant=tenant_bulk job=BULK_1 resumed
+time=122
+BULK_1 quantum expired
+tenant=tenant_bulk job=BULK_2 resumed
+time=142.5
+BULK_2 quantum expired
+tenant=tenant_bulk job=BULK_1 resumed
+time=153
+tenant=tenant_bulk job=BULK_1 completed
+tenant=tenant_bulk job=BULK_2 resumed
+time=163.5
+tenant=tenant_bulk job=BULK_2 completed
+tenant=tenant_interactive job=INTER_4 dispatched
+time=166
+tenant=tenant_interactive job=INTER_4 completed
+tenant=tenant_interactive job=INTER_5 dispatched
+time=168.5
+tenant=tenant_interactive job=INTER_5 completed
+tenant=tenant_interactive job=INTER_6 dispatched
+time=171
+tenant=tenant_interactive job=INTER_6 completed
+tenant=tenant_interactive job=INTER_7 dispatched
+time=173.5
+tenant=tenant_interactive job=INTER_7 completed
+tenant=tenant_interactive job=INTER_8 dispatched
+time=176
+tenant=tenant_interactive job=INTER_8 completed
+tenant=tenant_interactive job=INTER_9 dispatched
+time=178.5
+tenant=tenant_interactive job=INTER_9 completed
+tenant=tenant_interactive job=INTER_10 dispatched
+time=181
+tenant=tenant_interactive job=INTER_10 completed
+tenant=tenant_interactive job=INTER_11 dispatched
+time=183.5
+tenant=tenant_interactive job=INTER_11 completed
+tenant=tenant_interactive job=INTER_12 dispatched
+time=186
+tenant=tenant_interactive job=INTER_12 completed
+tenant=tenant_interactive job=INTER_13 dispatched
+time=188.5
+tenant=tenant_interactive job=INTER_13 completed
+tenant=tenant_interactive job=INTER_14 dispatched
+time=191
+tenant=tenant_interactive job=INTER_14 completed

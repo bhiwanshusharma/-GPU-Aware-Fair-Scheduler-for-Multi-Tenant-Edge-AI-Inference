@@ -1,0 +1,58 @@
+time=0
+tenant=tenant_batch job=BATCH_0 dispatched
+time=15
+tenant=tenant_batch job=BATCH_0 completed
+tenant=tenant_batch job=BATCH_1 dispatched
+time=30.5
+tenant=tenant_batch job=BATCH_1 completed
+tenant=tenant_batch job=BATCH_2 dispatched
+time=46
+tenant=tenant_batch job=BATCH_2 completed
+tenant=tenant_batch job=BATCH_3 dispatched
+time=61.5
+tenant=tenant_batch job=BATCH_3 completed
+tenant=tenant_batch job=BATCH_4 dispatched
+time=77
+tenant=tenant_batch job=BATCH_4 completed
+tenant=tenant_batch job=BATCH_5 dispatched
+time=92.5
+tenant=tenant_batch job=BATCH_5 completed
+tenant=tenant_batch job=BATCH_6 dispatched
+time=108
+tenant=tenant_batch job=BATCH_6 completed
+tenant=tenant_batch job=BATCH_7 dispatched
+time=123.5
+tenant=tenant_batch job=BATCH_7 completed
+tenant=tenant_batch job=BATCH_8 dispatched
+time=139
+tenant=tenant_batch job=BATCH_8 completed
+tenant=tenant_batch job=BATCH_9 dispatched
+time=154.5
+tenant=tenant_batch job=BATCH_9 completed
+tenant=tenant_normal job=MED_0 dispatched
+time=167
+tenant=tenant_normal job=MED_0 completed
+tenant=tenant_critical job=CRIT_0 dispatched
+time=175.5
+tenant=tenant_critical job=CRIT_0 completed
+tenant=tenant_normal job=MED_1 dispatched
+time=188
+tenant=tenant_normal job=MED_1 completed
+tenant=tenant_critical job=CRIT_1 dispatched
+time=196.5
+tenant=tenant_critical job=CRIT_1 completed
+tenant=tenant_normal job=MED_2 dispatched
+time=209
+tenant=tenant_normal job=MED_2 completed
+tenant=tenant_critical job=CRIT_2 dispatched
+time=217.5
+tenant=tenant_critical job=CRIT_2 completed
+tenant=tenant_normal job=MED_3 dispatched
+time=230
+tenant=tenant_normal job=MED_3 completed
+tenant=tenant_normal job=MED_4 dispatched
+time=242.5
+tenant=tenant_normal job=MED_4 completed
+tenant=tenant_critical job=CRIT_3 dispatched
+time=251
+tenant=tenant_critical job=CRIT_3 completed

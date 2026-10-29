@@ -1,0 +1,2 @@
+[console_scripts]
+gpu-sched = src.cli.main:main
